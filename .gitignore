@@ -1,0 +1,7 @@
+.venv
+chroma
+ollama/ollama_data
+data/**
+.env
+.idea
+__pycache__

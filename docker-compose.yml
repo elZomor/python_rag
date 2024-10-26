@@ -1,0 +1,21 @@
+services:
+  ollama:
+    image: ollama/ollama:latest
+    container_name: ollama-server
+    ports:
+      - "11400:11434"
+    restart: unless-stopped
+    entrypoint: ["/bin/bash", "/root/init_ollama.sh"]
+    volumes:
+      - ./ollama/init_ollama.sh:/root/init_ollama.sh
+      - ./ollama/ollama_data:/root/.ollama
+  fastapi:
+    build: .
+    ports:
+      - "8010:8000"
+    volumes:
+      - .:/app
+    env_file:
+      - .env
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
